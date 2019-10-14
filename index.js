@@ -9,10 +9,10 @@ var Hapi = require('hapi');
 
 const server = new Hapi.Server({  
   host: 'localhost',
-  port: 3000
+  port: 3002
 })
 
-//to test. test http://localhost:3000/aboutus at browser
+//to test. test http://localhost:3002/aboutus at browser
 server.route({
   method: 'GET',
   path: '/aboutus',
@@ -21,7 +21,7 @@ server.route({
   }
 })
 
-//to test. test http://localhost:3000/hello/samsuri at browser
+//to test. test http://localhost:3002/hello/samsuri at browser
 server.route({
   method: 'GET',
   path: '/hello/{name}',
@@ -45,11 +45,19 @@ server.route({
   path: '/result/{MyInput}',
   handler: (request, h) => {
       return '[{"result": "' + request.params.MyInput + 
-      '","Name": "' + request.payload.Parameter +      
+      '","Name": "' + request.payload.Name +      
       '","Phone": "' + request.payload.Phone + '"}]'
   }
 })
 
+server.route({
+  method: 'POST',
+  path: '/calc',
+  handler: (request, h) => {
+    var result = request.payload.Value1 + request.payload.Value2
+      return result
+  }
+})
 
 const bootUpServer = async () => 
 {    
